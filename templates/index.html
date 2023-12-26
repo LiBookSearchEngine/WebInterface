@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Libro Search Engine</title>
+</head>
+<body>
+    <h1>Bienvenido a Libro Search Engine</h1>
+    <p>Realiza tu búsqueda de libros aquí:</p>
+    <form action="/search" method="GET">
+        <input type="text" name="query" placeholder="Buscar libros">
+        <select name="api">
+            <option value="total">Total Words</option>
+            <option value="length">Word Length</option>
+            <option value="documents">Word Documents</option>
+            <option value="search">Phrase Search</option>
+            <option value="recommend">Recommend Book</option>
+            <option value="frequency">Word Frequency</option>
+        </select>
+        <input type="submit" value="Buscar">
+    </form>
+</body>
+</html>
