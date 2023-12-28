@@ -1,13 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Resultados de búsqueda</title>
+    <title>Search results</title>
+    <style>
+        /* Estilo para el cuerpo de la página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilo para el encabezado h1 */
+        h1 {
+            color: #333;
+            font-size: 36px;
+            margin-top: 40px;
+        }
+
+        /* Estilo para la lista de resultados */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Estilo para los elementos de la lista */
+        li {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            width: 70%;
+            margin: 10px;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px #888888;
+            margin: 10px auto;
+            display: flex; /* Usar flexbox para centrar verticalmente */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+        }
+
+        /* Cambio de color al pasar el cursor sobre los elementos de la lista */
+        li:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
-    <h1>Resultados de búsqueda</h1>
+    <h1>Search results</h1>
     <ul>
         {% for book in results %}
-            <li>{{ book }}</li>
+            <li>{{ book.title }}</li>
         {% endfor %}
     </ul>
 </body>

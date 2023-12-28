@@ -1,0 +1,52 @@
+/* Estilo para el cuerpo de la página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para el encabezado h1 */
+h1 {
+    color: #333;
+    font-size: 36px;
+    margin-top: 40px;
+}
+
+/* Estilo para el párrafo */
+p {
+    color: #666;
+    font-size: 18px;
+}
+
+/* Estilo para el formulario */
+form {
+    margin-top: 20px;
+}
+
+/* Estilo para el campo de entrada de texto */
+input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Estilo para el botón de envío */
+input[type="submit"] {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Cambio de color al pasar el cursor sobre el botón */
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
