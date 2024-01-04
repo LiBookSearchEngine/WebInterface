@@ -62,6 +62,11 @@ def send_message():
         mail.send(msg_to_user)
 
         return redirect(url_for('index')) 
+    
+
+@app.route('/register')
+def register():
+    return render_template('register.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
