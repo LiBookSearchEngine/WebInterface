@@ -69,52 +69,93 @@ input[type="submit"]:hover {
     background-color: #666; 
 }
 
-.login-button {
-    margin-left: 10px;
+.title {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #666;
+    padding-bottom: 20px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title h1 {
+    color: #333;
+    font-size: 36px; 
+    margin-top: 40px; 
 }
 
 .container {
     display: flex;
     flex-direction: row;
     overflow: hidden;
-    height: 84vh;
+    height: 70vh;
+    width: 80%;
+    align-items: center;
+    margin: 20px auto;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #666;
+    padding-bottom: 20px;
 }
 
 .left-side {
+    flex: 1;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: left; 
+    justify-content: left; 
+}
+
+.left-side h2 {
+    font-size: 24px; 
+    color: #333;
+}
+
+.right-side {
     flex: 1;
     position: relative;
     overflow: hidden;
 }
 
-.background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/static/images/book.png');
-    background-size: cover;
-    background-position: center;
+
+.left-side-2 {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
 }
 
+.right-side-2 h2 {
+    font-size: 24px; 
+    color: #333;
+}
 
-.right-side {
+.right-side-2 {
     flex: 1;
-    background-color: rgba(255, 255, 255, 0.7);
     padding: 20px;
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center; 
-    justify-content: center; 
+    align-items: left; 
+    justify-content: left; 
 }
 
+.container2 {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    height: 50vh;
+    width: 80%;
+    margin: 20px auto;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #666;
+    padding-bottom: 20px;
+    align-items: center;
+}
 
-.diagonal-line {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 2px; 
-    height: 100%;
-    background-color: #fff;
+.right-side-2 p {
+    margin: 0;
+    padding: 0;
 }

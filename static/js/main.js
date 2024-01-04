@@ -7,3 +7,24 @@ document.addEventListener("DOMContentLoaded", function () {
         this.placeholder = "Search for books here:";
     });
 });
+
+function validateForm() {
+    var nameField = document.getElementById("name");
+    var emailField = document.getElementById("email");
+    var messageField = document.getElementById("message");
+    var acceptCheckbox = document.getElementById("accept");
+    var errorMessage = document.getElementById("error-message");
+
+    if (nameField.value === "" || emailField.value === "" || messageField.value === "") {
+        errorMessage.style.display = "block";
+        return false;
+    }
+
+    if (!acceptCheckbox.checked) {
+        errorMessage.style.display = "block";
+        return false;
+    }
+
+    errorMessage.style.display = "none";
+    return true;
+}

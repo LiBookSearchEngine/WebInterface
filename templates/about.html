@@ -2,28 +2,75 @@
 <html>
 <head>
     <title>About Us - LiBook</title>
-    <link rel="stylesheet" type="text/css" href="/static/about.css"> <!-- Referencia al archivo CSS -->
+    <link rel="stylesheet" type="text/css" href="/static/about.css">
 </head>
 <body>
-    <!-- Barra de navegación -->
     <div class="navbar">
-        <a href="/">Home</a>
-        <a href="/about">About Us</a>
-        <a href="/contact">Contact Us</a>
-        <a href="/login">Login</a>
+        <div class="logo">
+            <img src="/static/images/logo.png" alt="LiBook Logo" width="100" height="100">
+        </div>
+        <div class="nav-buttons">
+            <a href="/" class="index-button">Home</a>
+            <a href="/about" class="about-button">About us</a>
+            <a href="/contact" class="contact-button">Contact us</a>
+            <a href="/login" class="login-button">Login</a>
+        </div>
     </div>
 
-    <!-- Contenido principal de la página -->
-    <div class="content">
+    <div class="title">
         <h1>About Us</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla a odio id dui pharetra rhoncus. Sed venenatis mauris vel risus viverra, a pellentesque est eleifend. Phasellus aliquet nunc non augue congue, et rhoncus urna ultricies.</p>
-        <p>Vestibulum mattis sapien ac nibh venenatis, a tincidunt metus dapibus. Nulla facilisi. Etiam feugiat sagittis tellus, et egestas libero cursus eu. Vivamus tempus libero et libero laoreet, vel venenatis velit bibendum. Nulla facilisi.</p>
-        <p>Nullam luctus, libero in blandit ultrices, metus libero luctus sapien, a ultricies velit nulla vitae sem. Curabitur bibendum vel metus a rhoncus. Maecenas in arcu tincidunt, scelerisque libero sit amet, blandit turpis.</p>
+    </div>
+    <div class = "container">
+        <div class="left-side">
+            <h2>Our mision and our vision</h2>
+            <p>
+                Our mission is to facilitate global access to the immense wealth of literary knowledge stored in the Gutenberg Library and other similar repositories. 
+                We are committed to providing an exceptionally fast and accurate book search platform, powered by cutting-edge technology. Our passion is to connect 
+                people to the wisdom of written words and enrich their lives through the discovery of classic and contemporary literature.
+            </p>
+            <p>
+                Our vision is to lead the online book search industry, being recognised as the standard of excellence in accessibility and search speed. We seek to 
+                pioneer technological innovation, developing solutions that consistently exceed our users' expectations. As we evolve, we aspire to become a global 
+                benchmark in the democratisation of knowledge, giving people around the world the ability to explore, learn and enjoy humanity's vast literary heritage.
+            </p>
+        </div>
+        <div class = "right-side">
+            <img src="static/images/mision.png" alt="Mision" width="60%">
+        </div>
     </div>
 
-    <!-- Pie de página -->
+    <div class="container2">
+        <div class = "left-side-2">
+            <img src="static/images/facultad.jpg" alt="Facultad" width="90%">
+        </div>
+        <div class = "right-side-2">
+            <h2>Our History</h2>
+        <p>Our company was founded in 2023 at the University of Las Palmas de Gran Canaria as part of a mandatory Big Data group project. 
+            During that project, a group of passionate students came together to tackle complex data challenges and discovered a passion for technology and data analytics. 
+            As the project progressed, they decided to take their experience and expertise into the business world, and LiBook was born.</p>
+        </div>
+    </div>
+
+    <div class = "container">
+        <div class="left-side">
+            <h2>Our Evolution</h2>
+            <p> Our company began as a modest programming assignment in college, when a group of enthusiastic data science and engineering students decided to tackle
+                the challenge of creating a search engine for books in the Gutenberg domain. Initially, they developed a simple Python engine that could perform basic 
+                searches in the vast repository of books. However, their passion for technology and problem solving soon led them on a transformative journey.</p>
+            <p> The team immersed itself in the world of Java application development, creating essential components such as the 'crawler' to download books, the 
+                'cleaner' to clean the data, the 'indexer' to index it and the 'query' to handle queries efficiently. As the applications gained complexity, 
+                so did the infrastructure. The company embraced the containerisation trend and adopted Docker to efficiently package and deploy its applications. Nginx technology became a key enabler 
+                to optimise performance and query speed. The result of these improvements was astounding.
+            </p>
+        </div>
+        <div class = "right-side">
+            <img src="static/images/historia.jpg" alt="Mision">
+        </div>
+    </div>
+
+
     <footer>
-        <p>&copy; 2023 LiBook. Todos los derechos reservados.</p>
+        <p>&copy; 2023 LiBook. All rights reserved.</p>
     </footer>
 </body>
 </html>
