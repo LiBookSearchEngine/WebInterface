@@ -78,3 +78,14 @@ input[type="submit"]:hover {
     margin-top: 20px;
 }
 
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+}

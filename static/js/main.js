@@ -28,3 +28,16 @@ function validateForm() {
     errorMessage.style.display = "none";
     return true;
 }
+
+document.getElementById('register-form').addEventListener('submit', function(event) {
+    const password = document.getElementById('password').value;
+    const confirm_password = document.getElementById('confirm_password').value;
+    const error_message = document.getElementById('error-message');
+
+    if (password !== confirm_password) {
+        event.preventDefault();
+        error_message.textContent = 'Passwords do not match. Please try again.';
+    } else {
+        error_message.textContent = '';
+    }
+});

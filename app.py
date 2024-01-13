@@ -21,7 +21,6 @@ def index():
 def search():
     query = request.args.get('query')
     query = query.replace(' ', '+')
-    print(query)
 
     if ' ' not in query:
         api_url = f'http://localhost:8080/datamart/{query}'
@@ -34,9 +33,27 @@ def search():
 
     return render_template('search_results.html', results=results)
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        api_url = 'http://localhost:8081/user/login'
+        data = {'username': username, 'password': password}
+        response = requests.post(api_url, data=data)
+
+        if response.status_code == 200:
+            session_cookie = response.cookies.get('Session')
+            if session_cookie:
+                session['username'] = username
+                response = make_response(redirect(url_for('index')))
+                response.set_cookie('Session', session_cookie)
+                return response
+        else:
+            error_message = 'Incorrect credentials. Please try again.'
+
+    return render_template('login.html', error=error_message if 'error_message' in locals() else None)
 
 @app.route('/about')
 def about():
@@ -64,9 +81,36 @@ def send_message():
         return redirect(url_for('index')) 
     
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    error = None
+    message = None
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+
+        if len(password) < 8:
+            error = 'Password must be at least 8 characters long.'
+        elif password != confirm_password:
+            error = 'Passwords do not match. Please try again.'
+        else:
+            api_url = 'http://localhost:8081/user/sign-up'
+            data = {'username': username, 'password': password}
+            response = request.post(api_url, data=data)
+
+            if response.status_code == 200:
+                message = 'Correctly registered'
+            else:
+                error = 'Registration failed. Please try again.'
+            
+    return render_template('register.html', error=error, message=message)
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

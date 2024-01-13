@@ -73,6 +73,10 @@ input[type="submit"]:hover {
     margin-left: 10px;
 }
 
+.logout-button {
+    margin-left: 10px;
+}
+
 .container {
     display: flex;
     flex-direction: row;

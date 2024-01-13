@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Inicio de Sesión - LiBook</title>
+    <title>Register - LiBook</title>
     <link rel="stylesheet" type="text/css" href="/static/login.css">
 </head>
 <body>
@@ -21,17 +21,31 @@
         <img src="/static/images/user.png" alt="Login Logo" width="100">
     </div>
     
-    <h1>Member login</h1>
-    <form action="/login" method="POST">
-        <label for="username">User:</label>
+    <h1>Member register</h1>
+    <form action="/register" id="register-form" action="" method="POST">
+        <label for="username">Enter your username</label>
         <input type="text" id="username" name="username" required>
         <br>
-        <label for="password">Password:</label>
+        <label for="password">Enter your password</label>
         <input type="password" id="password" name="password" required>
         <br>
-        <input type="submit" value="Login">
+        <label for="confirm_password">Confirm your password</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+        <div class="form-group">
+            <input type="checkbox" id="accept" name="accept" required>
+            <label for="accept">I accept the terms and conditions.</label>
+        </div>
+
+        {% if error %}
+        <div class="error-message">{{ error }}</div>
+        {% endif %}
+
+        <input type="submit" value="Register">
     </form>
 
-    <p>Don't have an account? <a href="/register" target="_blank">Register here</a></p>
+    {% if message %}
+    <div class="success-message">{{ message }}</div>
+    {% endif %}
+
 </body>
 </html>

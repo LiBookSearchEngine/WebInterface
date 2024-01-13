@@ -13,7 +13,12 @@
             <a href="/" class="index-button">Home</a>
             <a href="/about" class="about-button">About us</a>
             <a href="/contact" class="contact-button">Contact us</a>
-            <a href="/login" class="login-button">Login</a>
+            {% if 'username' in session %}
+                <span class="username">{{ session['username'] }}</span>
+                <a href="/logout" class="logout-button">Logout</a>
+            {% else %}
+                <a href="/login" class="login-button">Login</a>
+            {% endif %}
         </div>
     </div>
 

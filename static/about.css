@@ -21,6 +21,10 @@ form {
     margin-top: 20px;
 }
 
+.logout-button {
+    margin-left: 10px;
+}
+
 input[type="text"] {
     width: 300px;
     padding: 10px;
