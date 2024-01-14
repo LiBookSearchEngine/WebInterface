@@ -122,3 +122,40 @@ input[type="submit"]:hover {
     height: 100%;
     background-color: #fff;
 }
+
+.username {
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 18px;
+    margin-left: 10px;
+    background-color:rgba(131, 131, 131, 0.7);
+    padding: 5px 10px; 
+    border-radius: 5px;
+}
+
+.label-input-container {
+    display: flex; /* Utiliza flexbox para alinear elementos en línea */
+    align-items: center; /* Alinea verticalmente el contenido */
+    margin-bottom: 10px;
+}
+
+label {
+    flex: 1; /* Ocupa el 50% del ancho del contenedor (ajustar según sea necesario) */
+    text-align: right; /* Alinea el texto de la etiqueta a la derecha */
+    margin-right: 10px; /* Agrega espacio entre la etiqueta y el cuadro de texto */
+}
+
+input[type="text"],
+input[type="file"] {
+    flex: 2; /* Ocupa el 50% del ancho del contenedor (ajustar según sea necesario) */
+    padding: 10px;
+}
+
+input[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}

@@ -1,9 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for, make_response
 import requests
 from flask_mail import Mail, Message
+import fitz 
+import json
 
 app = Flask(__name__)
 app.static_folder = 'static'
+app.secret_key = 'your_secret_key'
 app.config['MAIL_SERVER'] = 'localhost'
 app.config['MAIL_PORT'] = 25
 app.config['MAIL_USERNAME'] = 'arduinoalumnos2023@gmail.com'
@@ -39,16 +42,15 @@ def login():
         username = request.form['username']
         password = request.form['password']
         
-        api_url = 'http://localhost:8081/user/login'
-        data = {'username': username, 'password': password}
-        response = requests.post(api_url, data=data)
+        url = f'http://localhost:8082/user/login?username={username}&password={password}'
+
+        response = requests.get(url)
 
         if response.status_code == 200:
             session_cookie = response.cookies.get('Session')
             if session_cookie:
                 session['username'] = username
                 response = make_response(redirect(url_for('index')))
-                response.set_cookie('Session', session_cookie)
                 return response
         else:
             error_message = 'Incorrect credentials. Please try again.'
@@ -58,6 +60,46 @@ def login():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if request.method == 'POST':
+        name = request.form['name']
+        language = request.form['language']
+        date = request.form['date']
+        status = request.form['status']
+        pdf = request.files['pdf']
+
+        pdf_content = ""
+        if pdf:
+            pdf_data = pdf.read()
+            doc = fitz.open(stream=pdf_data, filetype="pdf")
+            for page_num in range(len(doc)):
+                page = doc[page_num]
+                pdf_content += page.get_text()
+
+        data = {'name': name, 'language': language, 'date': date, 'status': status, 'conntent': pdf_content}
+
+
+        api_url ='http://localhost:8082/user/post'
+        response = requests.post(api_url,
+                                 data=json.dumps(data))
+
+        if response.status_code == 200:
+            data = response.json()
+            return render_template('profile.html', data=data)
+        else:
+            return "Error getting data from the API"
+    else:
+        api_url = 'http://localhost:8082/user/books'
+        response = requests.get(api_url, cookies={'Session': request.cookies.get('session')})
+
+        if response.status_code == 200:
+            data = response.text
+            print(data)
+            return render_template('profile.html', data=data)
+        else:
+            return "Error getting data from the API"
 
 @app.route('/contact')
 def contact():
@@ -95,9 +137,8 @@ def register():
         elif password != confirm_password:
             error = 'Passwords do not match. Please try again.'
         else:
-            api_url = 'http://localhost:8081/user/sign-up'
-            data = {'username': username, 'password': password}
-            response = request.post(api_url, data=data)
+            url = f'http://localhost:8082/user/sign-up?username={username}&password={password}'
+            response = requests.get(url)
 
             if response.status_code == 200:
                 message = 'Correctly registered'
@@ -108,7 +149,13 @@ def register():
 
 @app.route('/logout')
 def logout():
+    response = make_response(redirect(url_for('index')))
     session.pop('username', None)
+    response.delete_cookie('Session')
+
+    url = f'http://localhost:8082/user/logout'
+    requests.get(url)
+
     return redirect(url_for('index'))
 
 

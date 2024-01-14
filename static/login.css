@@ -89,3 +89,55 @@ input[type="submit"]:hover {
     font-weight: bold;
     margin-top: 10px;
 }
+
+.form-group label {
+    display: flex;
+    align-items: center;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.checkbox-group label {
+    display: block;
+    margin-top: 10px;
+}
+
+form {
+    margin-top: 20px;
+    text-align: center; /* Centrar contenido horizontalmente */
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar contenido horizontalmente */
+    width: 100%;
+    text-align: center; /* Centrar contenido horizontalmente */
+}
+
+.checkbox-group label {
+    display: block;
+    margin-top: 10px;
+    text-align: center; /* Centrar contenido horizontalmente */
+}
+
+/* Estilos para el checkbox */
+.checkbox-group input[type="checkbox"] {
+    width: auto; /* Ancho automático para ocupar todo el ancho del formulario */
+    margin: 0 auto; /* Centrar el checkbox horizontalmente */
+}

@@ -14,8 +14,8 @@
             <a href="/about" class="about-button">About us</a>
             <a href="/contact" class="contact-button">Contact us</a>
             {% if 'username' in session %}
-                <span class="username">{{ session['username'] }}</span>
                 <a href="/logout" class="logout-button">Logout</a>
+                <span class="username">{{ session['username'] }}</span>
             {% else %}
                 <a href="/login" class="login-button">Login</a>
             {% endif %}

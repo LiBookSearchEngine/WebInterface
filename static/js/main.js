@@ -41,3 +41,4 @@ document.getElementById('register-form').addEventListener('submit', function(eve
         error_message.textContent = '';
     }
 });
+
