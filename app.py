@@ -7,7 +7,6 @@ import json
 app = Flask(__name__)
 app.static_folder = 'static'
 app.secret_key = 'your_secret_key'
-app.config['SESSION_COOKIE_NAME'] = 'Session'
 app.config['MAIL_SERVER'] = 'localhost'
 app.config['MAIL_PORT'] = 25
 app.config['MAIL_USERNAME'] = 'arduinoalumnos2023@gmail.com'
@@ -47,12 +46,18 @@ def login():
 
         response = requests.get(url)
 
+        session_id = response.cookies.get('Session')
+        session['session_id'] = session_id
+
+        with open('session.txt', 'w') as f:
+            f.write(session_id)
+
         if response.status_code == 200:
-            session_cookie = response.cookies.get('Session')
-            if session_cookie:
-                session['username'] = username
-                response = make_response(redirect(url_for('index')))
-                return response
+
+            session['username'] = username
+            response = make_response(redirect(url_for('index')))
+            return response
+
         else:
             error_message = 'Incorrect credentials. Please try again.'
 
@@ -93,7 +98,7 @@ def profile():
             return "Error getting data from the API"
     else:
         api_url = 'http://localhost:8082/user/books'
-        response = requests.get(api_url, cookies={'Session': request.cookies.get('Session')})
+        response = requests.get(api_url, cookies={'Session': session['session_id']})
         print(request.cookies.get('Session'))
 
         if response.status_code == 200:
