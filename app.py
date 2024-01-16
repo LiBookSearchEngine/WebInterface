@@ -6,7 +6,6 @@ import json
 import openai
 
 app = Flask(__name__)
-api_key = "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"
 app.static_folder = 'static'
 app.secret_key = 'your_secret_key'
 app.config['MAIL_SERVER'] = 'localhost'
