@@ -3,8 +3,10 @@ import requests
 from flask_mail import Mail, Message
 import fitz 
 import json
+import openai
 
 app = Flask(__name__)
+api_key = "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"
 app.static_folder = 'static'
 app.secret_key = 'your_secret_key'
 app.config['MAIL_SERVER'] = 'localhost'
@@ -23,11 +25,17 @@ def index():
 @app.route('/search')
 def search():
     query = request.args.get('query')
-    query = query.replace(' ', '+')
+    query_list = query.split()    
 
-    if ' ' not in query:
+    if len(query_list) == 1:
+        print('no relevant_words')
         api_url = f'http://localhost:8080/datamart/{query}'
     else:
+        query = query.replace(' ', '+')
+        relevant_words = relevant_text(query)
+        print(relevant_words)
+        print('relevant_words')
+        query = relevant_words.replace(' ', '+')
         api_url = f'http://localhost:8080/datamart-recommend/{query}'
     
     response = requests.get(api_url)
@@ -36,13 +44,28 @@ def search():
 
     return render_template('search_results.html', results=results)
 
+def relevant_text(phrase):
+    phrase = phrase.replace('+', ' ')
+    openai.api_key = api_key
+    response = openai.Completion.create(
+        engine="davinci-codex",
+        prompt=phrase,
+        max_tokens=50, 
+        n=1, 
+        stop=None 
+    )
+
+    if response.choices:
+        print(response.choices[0].text.strip())
+        return response.choices[0].text.strip()
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         
-        url = f'http://localhost:8082/user/login?username={username}&password={password}'
+        url = f'http://34.125.120.252/user/login?username={username}&password={password}'
 
         response = requests.get(url)
 
@@ -87,7 +110,7 @@ def profile():
         data = {'name': name, 'language': language, 'date': date, 'status': status, 'conntent': pdf_content}
 
 
-        api_url ='http://localhost:8082/user/post'
+        api_url ='http://34.125.120.252/user/post'
         response = requests.post(api_url,
                                  data=json.dumps(data))
 
@@ -97,12 +120,12 @@ def profile():
         else:
             return "Error getting data from the API"
     else:
-        api_url = 'http://localhost:8082/user/books'
+        api_url = 'http://34.125.120.252/user/books'
         response = requests.get(api_url, cookies={'Session': session['session_id']})
-        print(request.cookies.get('Session'))
 
         if response.status_code == 200:
             data = response.json()
+            print(data)
             return render_template('profile.html', data=data)
         else:
             return "Error getting data from the API"
@@ -143,7 +166,7 @@ def register():
         elif password != confirm_password:
             error = 'Passwords do not match. Please try again.'
         else:
-            url = f'http://localhost:8082/user/sign-up?username={username}&password={password}'
+            url = f'http://34.125.120.252/user/sign-up?username={username}&password={password}'
             response = requests.get(url)
 
             if response.status_code == 200:
@@ -159,11 +182,10 @@ def logout():
     session.pop('username', None)
     response.delete_cookie('Session')
 
-    url = f'http://localhost:8082/user/logout'
+    url = f'http://34.125.120.252/user/logout'
     requests.get(url)
 
     return redirect(url_for('index'))
-
 
 if __name__ == "__main__":
     app.run(debug=True)
