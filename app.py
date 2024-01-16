@@ -70,10 +70,6 @@ def login():
 
         session_id = response.cookies.get('Session')
         session['session_id'] = session_id
-
-        with open('session.txt', 'w') as f:
-            f.write(session_id)
-
         if response.status_code == 200:
 
             session['username'] = username
@@ -124,7 +120,6 @@ def profile():
 
         if response.status_code == 200:
             data = response.json()
-            print(data)
             return render_template('profile.html', data=data)
         else:
             return "Error getting data from the API"
