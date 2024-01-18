@@ -21,6 +21,18 @@ mail = Mail(app)
 def index():
     return render_template('index.html')
 
+@app.route('/search-by-author')
+def select_by_author():
+    return render_template('select-by-author.html')
+
+@app.route('/search-by-language')
+def select_by_language():
+    return render_template('select-by-language.html')
+
+@app.route('/search-by-author')
+def search_by_author():
+    return render_template('search-by-author.html')
+
 @app.route('/search')
 def search():
     query = request.args.get('query')
@@ -42,6 +54,10 @@ def search():
     results = response.json()
 
     return render_template('search_results.html', results=results)
+
+@app.route('/search-author')
+def search_author():
+    query = request.args.get('query')
 
 def relevant_text(phrase):
     phrase = phrase.replace('+', ' ')
