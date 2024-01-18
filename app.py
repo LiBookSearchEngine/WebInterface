@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, make_response
+from flask import Flask, render_template, request, session, redirect, url_for, make_response, send_file
 import requests
 from flask_mail import Mail, Message
 import fitz 
@@ -12,7 +12,7 @@ app.config['MAIL_SERVER'] = 'localhost'
 app.config['MAIL_PORT'] = 25
 app.config['MAIL_USERNAME'] = 'arduinoalumnos2023@gmail.com'
 app.config['MAIL_PASSWORD'] = 'ardualu23'
-app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = False
 
 mail = Mail(app)
@@ -39,14 +39,9 @@ def search():
     query_list = query.split()    
 
     if len(query_list) == 1:
-        print('no relevant_words')
         api_url = f'http://localhost:8080/datamart/{query}'
     else:
         query = query.replace(' ', '+')
-        relevant_words = relevant_text(query)
-        print(relevant_words)
-        print('relevant_words')
-        query = relevant_words.replace(' ', '+')
         api_url = f'http://localhost:8080/datamart-recommend/{query}'
     
     response = requests.get(api_url)
@@ -57,24 +52,22 @@ def search():
 
 @app.route('/search-author')
 def search_author():
-    query = request.args.get('query')
+    author = request.args.get('query')
 
-def relevant_text(phrase):
-    phrase = phrase.replace('+', ' ')
-    openai.api_key = api_key
-    response = openai.Completion.create(
-        engine="davinci-codex",
-        prompt=phrase,
-        max_tokens=50, 
-        n=1, 
-        stop=None 
-    )
+    api_url = f'http://localhost:8080/metadata/author/{author}'
+    response = requests.get(api_url)
+    results = response.json()
+    return render_template('metadata_results.html', results=results,  author=author)
 
-    if response.choices:
-        print(response.choices[0].text.strip())
-        return response.choices[0].text.strip()
+@app.route('/search-language')
+def search_language():
+    language = request.args.get('query')
 
-@app.route('/login', methods=['GET', 'POST'])
+    api_url = f'http://localhost:8080/metadata/language/{language}'
+    response = requests.get(api_url)
+    results = response.json()
+    return render_template('metadata_results.html', results=results,  language=language)
+    
 def login():
     if request.method == 'POST':
         username = request.form['username']
