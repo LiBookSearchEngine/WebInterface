@@ -25,9 +25,20 @@
         </div>
     </div>
 
-    
+    <h1>Books</h1>
+        <div class="search-results">
+                {% for book in results %}
+                    <div class="book">
+                        <span class="book-title">{{ book['title'] }}</span>
+                        <a href="{{ url_for('book_details', book_id=book['id'], book=book|tojson) }}">View more details</a>
+                    </div>
+                {% endfor %}
+        </div>    
+
+            
     <footer>
         <p>&copy; 2023 LiBook. All rights reserved.</p>
     </footer>
+
 </body>
 </html>

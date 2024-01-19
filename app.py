@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, session, redirect, url_for, make_response, send_file
+from flask import Flask, render_template, request, session, redirect, url_for, make_response, send_file, flash
 import requests
 from flask_mail import Mail, Message
 import fitz 
 import json
-import openai
+
 
 app = Flask(__name__)
 app.static_folder = 'static'
@@ -36,6 +36,10 @@ def search_by_author():
 @app.route('/search')
 def search():
     query = request.args.get('query')
+    if not query:
+        flash('Error: The search field is empty. Please enter a query.', 'error')
+        return redirect(url_for('index'))
+    
     query_list = query.split()    
 
     if len(query_list) == 1:
@@ -47,8 +51,34 @@ def search():
     response = requests.get(api_url)
 
     results = response.json()
+    transformed_data = transform(results)
+    print(transformed_data)
 
-    return render_template('search_results.html', results=results)
+    return render_template('search_results.html', results=transformed_data,json_dumps=json.dumps)
+
+@app.template_filter('tojson')
+def tojson_filter(obj):
+    return json.dumps(obj)
+
+@app.route('/book-details/<book_id>')
+def book_details(book_id):
+    book_json = request.args.get('book')
+    if book_json:
+        book = json.loads(book_json)
+    else:
+        book = None
+    return render_template('book_details.html', book=book)
+
+
+def transform(results):
+    transformed_data = []
+
+    for item in results:
+        for key, value in item.items():
+            value['id']=key
+            transformed_data.append(value)
+
+    return transformed_data
 
 @app.route('/search-author')
 def search_author():
@@ -68,6 +98,7 @@ def search_language():
     results = response.json()
     return render_template('metadata_results.html', results=results,  language=language)
     
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']

@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>LiBook</title>
-        <link rel="stylesheet" type="text/css" href="/static/results_metadata.css">
+        <link rel="stylesheet" type="text/css" href="/static/results_book.css">
         <script src="/static/js/main.js"></script>
 </head>
 <body>
@@ -24,34 +24,34 @@
             {% endif %}
         </div>
     </div>
-        {% if author %}
-            <h1> Books by "{{ author }}" </h1>
-        {% elif language %}
-            <h1> Books in "{{ language }}" </h1>
-        {% endif %}
 
-        {% if results %}
-        <ul>
-            {% for book_id, book_info in results.items() %}
+    <div class="container">
+        <div class="left-side">
+            <div class="background-image"></div>
+        </div>
+        <div class="right-side">
+            <h1>{{ book['title'] }}</h1>
+            <ul>
                 <li>
-                    <strong>ID:</strong> {{ book_id }}<br>
-                    <strong>Title:</strong> {{ book_info['title'] }}<br>
-                    <strong>Author:</strong> {{ book_info['author'] }}<br>
-                    <strong>Date:</strong> {{ book_info['releaseDate'] }}<br>
-                    <strong>Language:</strong> {{ book_info['language'] }}<br>
+                    <strong>ID:</strong> {{ book['id'] }}<br>
+                    <br>
+                    <strong>Author:</strong> {{ book['author'] }}<br>
+                    <br>
+                    <strong>Date:</strong> {{ book['releaseDate'] }}<br>
+                    <br>
+                    <strong>Language:</strong>{{ book['language'] }}<br>
                     <br>
                 <div class="button-container">
-                    <a href="https://www.gutenberg.org/ebooks/{{ book_id }}" class="download-button">Read on Project Gutenberg</a>
+                    <a href="https://www.gutenberg.org/ebooks/{{ book['id'] }}" class="download-button">Read on Project Gutenberg</a>
                 </div>
                 </li>
-            {% endfor %}
-        </ul>
-        {% else %}
-            <p>No books found</p>
-        {% endif %}
+            </ul>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2023 LiBook. All rights reserved.</p>
     </footer>
+    
 </body>
 </html>

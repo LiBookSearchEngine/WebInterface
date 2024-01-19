@@ -93,7 +93,7 @@ input[type="submit"]:hover {
     position: absolute;
     top: 20px;
     left: 0;
-    width: 100%;
+    width: 80%;
     height: 80%;
     background-image: url('/static/images/search.png');
     background-size: cover;
@@ -140,12 +140,12 @@ ul {
 }
 
 li {
-    margin: 10 auto; 
+    margin: 0 auto; 
     border: 1px solid #ccc;
-    padding: 50px;
+    padding: 20px;
     background-color: #f7f7f7;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 150%; 
+    width: 50%; 
     text-align: left;
     margin-bottom: 30px;
     align-items: center;
