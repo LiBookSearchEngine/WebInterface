@@ -233,3 +233,68 @@ textarea.form-control {
     padding: 5px 10px; 
     border-radius: 5px;
 }
+
+.content {
+    text-align: left;
+    padding: 20px;
+    max-width: 80%;
+    margin: 30px auto 0;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.content h1, .content h2 {
+    color: #333;
+}
+
+.content h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.content h2 {
+    font-size: 28px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.content p {
+    color: #666;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.additional-info {
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+}
+
+.contact-info {
+    margin-top: 40px;
+}
+
+.contact-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-info li {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+
+.footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+}
+
+.footer p {
+    margin: 0;
+}

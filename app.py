@@ -8,11 +8,11 @@ import json
 app = Flask(__name__)
 app.static_folder = 'static'
 app.secret_key = 'your_secret_key'
-app.config['MAIL_SERVER'] = 'localhost'
-app.config['MAIL_PORT'] = 25
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587  
 app.config['MAIL_USERNAME'] = 'arduinoalumnos2023@gmail.com'
 app.config['MAIL_PASSWORD'] = 'ardualu23'
-app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
 mail = Mail(app)
