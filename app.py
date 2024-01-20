@@ -43,10 +43,10 @@ def search():
     query_list = query.split()    
 
     if len(query_list) == 1:
-        api_url = f'http://localhost:8080/datamart/{query}'
+        api_url = f'http://192.168.1.37:8080/datamart/{query}'
     else:
         query = query.replace(' ', '+')
-        api_url = f'http://localhost:8080/datamart-recommend/{query}'
+        api_url = f'http://192.168.1.37:8080/datamart-recommend/{query}'
     
     response = requests.get(api_url)
 
@@ -84,7 +84,7 @@ def transform(results):
 def search_author():
     author = request.args.get('query')
 
-    api_url = f'http://localhost:8080/metadata/author/{author}'
+    api_url = f'http://192.168.1.37:8080/metadata/author/{author}'
     response = requests.get(api_url)
     results = response.json()
     return render_template('metadata_results.html', results=results,  author=author)
@@ -93,7 +93,7 @@ def search_author():
 def search_language():
     language = request.args.get('query')
 
-    api_url = f'http://localhost:8080/metadata/language/{language}'
+    api_url = f'http://192.168.1.37:8080/metadata/language/{language}'
     response = requests.get(api_url)
     results = response.json()
     return render_template('metadata_results.html', results=results,  language=language)
@@ -222,5 +222,5 @@ def logout():
     return redirect(url_for('index'))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
     app.static_folder = 'static'
