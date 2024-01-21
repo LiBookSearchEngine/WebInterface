@@ -136,7 +136,7 @@ def profile():
 
         api_url =f'http://{ip_server}/user/post'
         params = f"?name={name}&language={language}&date={date}&status={status}"
-        response = requests.post(api_url + params, cookies={'Session': session['session_id']})
+        response = requests.post(api_url + params, data=txt_content, cookies={'Session': session['session_id']})
 
         if response.status_code == 200:
             return user_books()
