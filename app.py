@@ -125,37 +125,32 @@ def profile():
         language = request.form['language']
         date = request.form['date']
         status = request.form['status']
-        pdf = request.files['pdf']
+        txt_file = request.files['txt']
 
-        pdf_content = ""
-        if pdf:
-            pdf_data = pdf.read()
-            doc = fitz.open(stream=pdf_data, filetype="pdf")
-            for page_num in range(len(doc)):
-                page = doc[page_num]
-                pdf_content += page.get_text()
-
-        data = {'name': name, 'language': language, 'date': date, 'status': status, 'conntent': pdf_content}
+        txt_content = ""
+        if txt_file:
+            txt_content = txt_file.read().decode('utf-8')
 
 
         api_url ='http://34.125.120.252/user/post'
-        response = requests.post(api_url,
-                                 data=json.dumps(data))
+        params = f"?name={name}&language={language}&date={date}&status={status}"
+        response = requests.post(api_url + params, cookies={'Session': session['session_id']})
 
         if response.status_code == 200:
-            data = response.json()
-            return render_template('profile.html', data=data)
-        else:
-            return "Error getting data from the API"
+            return user_books()
+        
     else:
-        api_url = 'http://34.125.120.252/user/books'
-        response = requests.get(api_url, cookies={'Session': session['session_id']})
+        return user_books()
+    
+def user_books():
+    api_url = 'http://34.125.120.252/user/books'
+    response = requests.get(api_url, cookies={'Session': session['session_id']})
 
-        if response.status_code == 200:
-            data = response.json()
-            return render_template('profile.html', data=data)
-        else:
-            return "Error getting data from the API"
+    if response.status_code == 200:
+        data = response.json()
+        return render_template('profile.html', data=data)
+    else:
+        return "Error getting data from the API"
 
 @app.route('/contact')
 def contact():
