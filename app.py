@@ -6,6 +6,7 @@ import json
 
 app = Flask(__name__)
 app.static_folder = 'static'
+app.secret_key='mysecretkey'
 
 mail = Mail(app)
 ip_nginx=""
