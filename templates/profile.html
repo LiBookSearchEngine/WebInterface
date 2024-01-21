@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Your profile - LiBook</title>
-        <link rel="stylesheet" type="text/css" href="/static/index.css">
+    <title>LiBook</title>
+        <link rel="stylesheet" type="text/css" href="/static/profile.css">
         <script src="/static/js/main.js"></script>
 </head>
 <body>
@@ -31,7 +31,7 @@
                 <ul>
                     {% for book in data %}
                         <li>
-                            <strong>Name:</strong> {{ book['name'] }}<br>
+                            <strong>Name:</strong> <a href="http://34.125.120.252/datalake/books/{{ book['name'] }}">{{ book['name'] }}</a><br>
                             <strong>Author:</strong> {{ book['author'] }}<br>
                             <strong>Date:</strong> {{ book['date'] }}<br>
                             <strong>Language:</strong> {{ book['language'] }}<br>
@@ -68,8 +68,8 @@
                 </div>
                 
                 <div class="label-input-container">
-                    <label for="pdf">Content:</label>
-                    <input type="file" name="pdf" accept=".pdf" required>
+                    <label for="txt">Content:</label>
+                    <input type="file" name="txt" accept=".txt" required>
                 </div>
                 
                 <input type="submit" value="Upload book">
