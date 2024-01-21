@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for, make_response, send_file, flash
 import requests
 from flask_mail import Mail, Message
-import fitz 
 import json
 
 
@@ -9,6 +8,8 @@ app = Flask(__name__)
 app.static_folder = 'static'
 
 mail = Mail(app)
+ip_nginx=""
+ip_server=""
 
 @app.route('/')
 def index():
@@ -36,10 +37,10 @@ def search():
     query_list = query.split()    
 
     if len(query_list) == 1:
-        api_url = f'http://192.168.1.37:8080/datamart/{query}'
+        api_url = f'http://{ip_nginx}:8080/datamart/{query}'
     else:
         query = query.replace(' ', '+')
-        api_url = f'http://192.168.1.37:8080/datamart-recommend/{query}'
+        api_url = f'http://{ip_nginx}:8080/datamart-recommend/{query}'
     
     response = requests.get(api_url)
 
@@ -54,7 +55,7 @@ def tojson_filter(obj):
     return json.dumps(obj)
 
 @app.route('/book-details/<book_id>')
-def book_details(book_id):
+def book_details():
     book_json = request.args.get('book')
     if book_json:
         book = json.loads(book_json)
@@ -77,7 +78,7 @@ def transform(results):
 def search_author():
     author = request.args.get('query')
 
-    api_url = f'http://192.168.1.37:8080/metadata/author/{author}'
+    api_url = f'http://{ip_nginx}:8080/metadata/author/{author}'
     response = requests.get(api_url)
     results = response.json()
     return render_template('metadata_results.html', results=results,  author=author)
@@ -86,7 +87,7 @@ def search_author():
 def search_language():
     language = request.args.get('query')
 
-    api_url = f'http://192.168.1.37:8080/metadata/language/{language}'
+    api_url = f'http://{ip_nginx}:8080/metadata/language/{language}'
     response = requests.get(api_url)
     results = response.json()
     return render_template('metadata_results.html', results=results,  language=language)
@@ -97,7 +98,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         
-        url = f'http://34.125.120.252/user/login?username={username}&password={password}'
+        url = f'http://{ip_server}/user/login?username={username}&password={password}'
 
         response = requests.get(url)
 
@@ -132,7 +133,7 @@ def profile():
             txt_content = txt_file.read().decode('utf-8')
 
 
-        api_url ='http://34.125.120.252/user/post'
+        api_url =f'http://{ip_server}/user/post'
         params = f"?name={name}&language={language}&date={date}&status={status}"
         response = requests.post(api_url + params, cookies={'Session': session['session_id']})
 
@@ -143,7 +144,7 @@ def profile():
         return user_books()
     
 def user_books():
-    api_url = 'http://34.125.120.252/user/books'
+    api_url = f'http://{ip_server}/user/books'
     response = requests.get(api_url, cookies={'Session': session['session_id']})
 
     if response.status_code == 200:
@@ -188,7 +189,7 @@ def register():
         elif password != confirm_password:
             error = 'Passwords do not match. Please try again.'
         else:
-            url = f'http://34.125.120.252/user/sign-up?username={username}&password={password}'
+            url = f'http://{ip_server}/user/sign-up?username={username}&password={password}'
             response = requests.get(url)
 
             if response.status_code == 200:
@@ -204,7 +205,7 @@ def logout():
     session.pop('username', None)
     response.delete_cookie('Session')
 
-    url = f'http://34.125.120.252/user/logout'
+    url = f'http://{ip_server}/user/logout'
     requests.get(url)
 
     return redirect(url_for('index'))
