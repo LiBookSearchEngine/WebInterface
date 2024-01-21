@@ -9,7 +9,7 @@ app.static_folder = 'static'
 
 mail = Mail(app)
 ip_nginx=""
-ip_server=""
+ip_server="34.16.163.134"
 
 @app.route('/')
 def index():
