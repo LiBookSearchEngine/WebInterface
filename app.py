@@ -6,10 +6,11 @@ import json
 
 app = Flask(__name__)
 app.static_folder = 'static'
+app.secret_key='mysecretkey'
 
 mail = Mail(app)
 ip_nginx=""
-ip_server=""
+ip_server="34.16.163.134"
 
 @app.route('/')
 def index():
@@ -135,7 +136,7 @@ def profile():
 
         api_url =f'http://{ip_server}/user/post'
         params = f"?name={name}&language={language}&date={date}&status={status}"
-        response = requests.post(api_url + params, cookies={'Session': session['session_id']})
+        response = requests.post(api_url + params, data=txt_content, cookies={'Session': session['session_id']})
 
         if response.status_code == 200:
             return user_books()
