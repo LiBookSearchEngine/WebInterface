@@ -33,7 +33,7 @@
             <h1>{{ book['title'] }}</h1>
             <ul>
                 <li>
-                    <strong>ID:</strong> {{ book['id'] }}<br>
+                    <strong>ID:</strong> {{ book['book_id'] }}<br>
                     <br>
                     <strong>Author:</strong> {{ book['author'] }}<br>
                     <br>
@@ -42,7 +42,7 @@
                     <strong>Language:</strong>{{ book['language'] }}<br>
                     <br>
                 <div class="button-container">
-                    <a href="https://www.gutenberg.org/ebooks/{{ book['id'] }}" class="download-button">Read on Project Gutenberg</a>
+                    <a href="https://www.gutenberg.org/ebooks/{{ book['book_id'] }}" class="download-button">Read on Project Gutenberg</a>
                 </div>
                 </li>
             </ul>

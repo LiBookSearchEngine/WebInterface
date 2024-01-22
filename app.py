@@ -9,7 +9,7 @@ app.static_folder = 'static'
 app.secret_key='mysecretkey'
 
 mail = Mail(app)
-ip_nginx=""
+ip_nginx="localhost"
 ip_server="34.16.163.134"
 
 @app.route('/')
@@ -38,7 +38,7 @@ def search():
     query_list = query.split()    
 
     if len(query_list) == 1:
-        api_url = f'http://{ip_nginx}:8080/datamart/{query}'
+        api_url = f'http://localhost:8080/datamart/{query}'
     else:
         query = query.replace(' ', '+')
         api_url = f'http://{ip_nginx}:8080/datamart-recommend/{query}'
@@ -55,14 +55,15 @@ def search():
 def tojson_filter(obj):
     return json.dumps(obj)
 
-@app.route('/book-details/<book_id>')
-def book_details():
+@app.route('/book_details/<int:book_id>')
+def book_details(book_id):
     book_json = request.args.get('book')
     if book_json:
         book = json.loads(book_json)
+        print(book)
     else:
         book = None
-    return render_template('book_details.html', book=book)
+    return render_template('book_details.html', book=book, book_id=book_id)
 
 
 def transform(results):
@@ -70,7 +71,8 @@ def transform(results):
 
     for item in results:
         for key, value in item.items():
-            value['id']=key
+            key = key.replace('"', '')
+            value['book_id']=int(key)
             transformed_data.append(value)
 
     return transformed_data
@@ -82,7 +84,13 @@ def search_author():
     api_url = f'http://{ip_nginx}:8080/metadata/author/{author}'
     response = requests.get(api_url)
     results = response.json()
-    return render_template('metadata_results.html', results=results,  author=author)
+
+    new_data = {}
+    for key, value in results.items():
+        new_key = int(key.strip('"'))
+        new_data[new_key] = value
+
+    return render_template('metadata_results.html', results=new_data,  author=author)
 
 @app.route('/search-language')
 def search_language():
@@ -91,7 +99,13 @@ def search_language():
     api_url = f'http://{ip_nginx}:8080/metadata/language/{language}'
     response = requests.get(api_url)
     results = response.json()
-    return render_template('metadata_results.html', results=results,  language=language)
+
+    new_data = {}
+    for key, value in results.items():
+        new_key = int(key.strip('"'))
+        new_data[new_key] = value
+
+    return render_template('metadata_results.html', results=new_data,  language=language)
     
 @app.route('/login', methods=['GET', 'POST'])
 def login():
